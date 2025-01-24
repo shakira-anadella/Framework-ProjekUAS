@@ -12,7 +12,7 @@ class ReviewController extends Controller
     {
         // Middleware untuk membatasi akses admin dan user
         $this->middleware('auth')->only(['store']); // Hanya user yang sudah login bisa memberi review
-        $this->middleware('can:admin-access')->only(['destroy']); // Hanya admin yang bisa menghapus review
+        $this->middleware(['auth', 'admin'])->only(['destroy']);
     }
 
     // USER SECTION
@@ -49,6 +49,7 @@ class ReviewController extends Controller
     /**
      * Menghapus review (hanya untuk admin)
      */
+    
     public function destroy(Review $review)
     {
         // Periksa apakah user yang mengakses adalah admin atau pemilik review
@@ -58,7 +59,7 @@ class ReviewController extends Controller
         $review->delete();
 
         // Redirect setelah review dihapus
-        return redirect()->back()->with('success', 'Review berhasil dihapus.');
+        return redirect()->route('admin.reviews.index')->with('success', 'Review berhasil dihapus.');
     }
 
     /**
@@ -73,5 +74,50 @@ class ReviewController extends Controller
         return view('events.show', compact('event', 'reviews'));
     }
 
-    
+    public function getReviewChartData()
+{
+    $reviewData = Review::selectRaw('event_id, COUNT(*) as review_count, AVG(rating) as average_rating')
+                        ->groupBy('event_id')
+                        ->get();
+
+    $labels = $reviewData->pluck('event.title')->toArray();
+    $data = $reviewData->pluck('review_count')->toArray();
+
+    return response()->json([
+        'labels' => $labels,
+        'datasets' => [
+            [
+                'label' => 'Review Count per Event',
+                'data' => $data,
+                'backgroundColor' => 'rgba(75, 192, 192, 0.2)',
+                'borderColor' => 'rgba(75, 192, 192, 1)',
+                'borderWidth' => 1
+            ]
+        ]
+    ]);
+}
+
+public function getReviewChartDataAverageRating()
+{
+    $reviewData = Review::selectRaw('event_id, AVG(rating) as average_rating')
+                        ->groupBy('event_id')
+                        ->get();
+
+    $labels = $reviewData->pluck('event.title')->toArray();
+    $data = $reviewData->pluck('average_rating')->toArray();
+
+    return response()->json([
+        'labels' => $labels,
+        'datasets' => [
+            [
+                'label' => 'Average Rating per Event',
+                'data' => $data,
+                'backgroundColor' => 'rgba(255, 159, 64, 0.2)',
+                'borderColor' => 'rgba(255, 159, 64, 1)',
+                'borderWidth' => 1
+            ]
+        ]
+    ]);
+}
+
 }

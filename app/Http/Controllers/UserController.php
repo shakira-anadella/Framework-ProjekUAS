@@ -28,7 +28,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'usertype' => 'required|string',
             'password' => 'required|string|min:8',
-        ]);
+        ]);        
 
         $validated['password'] = bcrypt($validated['password']);
         User::create($validated);

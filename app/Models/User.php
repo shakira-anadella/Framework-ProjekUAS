@@ -41,5 +41,11 @@ class User extends Authenticatable
         return $this->hasMany(Registration::class);
     }
 
+    public function getIsAdminAttribute()
+    {
+        return $this->role === 'admin'; // Sesuaikan dengan sistem role Anda
+    }
+
+
 
 }

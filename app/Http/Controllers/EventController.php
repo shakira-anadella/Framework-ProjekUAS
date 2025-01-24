@@ -124,7 +124,22 @@ class EventController extends Controller
         return view('events.show', compact('event', 'reviews')); // Kirimkan data review ke view
     }
 
-    
+    public function chartData()
+    {
+        $categories = Category::withCount('events')->get(); // Hitung jumlah event per kategori
 
-    
+        $labels = $categories->pluck('name'); // Nama kategori
+        $data = $categories->pluck('events_count'); // Jumlah event per kategori
+
+        return response()->json([
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'data' => $data,
+                    'backgroundColor' => ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'], // Warna random
+                ],
+            ],
+        ]);
+    }
+
 }

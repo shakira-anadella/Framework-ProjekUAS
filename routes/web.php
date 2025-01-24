@@ -85,6 +85,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::delete('/{id}', [RegistrationController::class, 'destroy'])->name('destroy');
 
     });
+
+    Route::get('/chart-data', [EventController::class, 'chartData'])->name('chart.data');
+    Route::get('/reviews/chart-data', [ReviewController::class, 'getReviewChartData'])->name('reviews.chartData');
+    Route::get('reviews/chart-data-average-rating', [ReviewController::class, 'getReviewChartDataAverageRating'])->name('reviews.chartDataAverageRating');
 });
 
 // Public Event Routes

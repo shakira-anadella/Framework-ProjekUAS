@@ -9,9 +9,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form action="{{ route('admin.events.store') }}" method="POST">
+                    <form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        
+
                         <!-- Title -->
                         <div class="mb-4">
                             <label for="title" class="form-label">Title</label>
@@ -63,7 +63,9 @@
                             <select name="category_id" id="category_id" class="form-control" required>
                                 <option value="" disabled selected>Select a category</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('category_id')
@@ -75,15 +77,15 @@
                         <div class="mb-4">
                             <label for="is_online" class="form-label">Is Online</label>
                             <select name="is_online" id="is_online" class="form-control">
-                                <option value="0">Offline</option>
-                                <option value="1">Online</option>
+                                <option value="0" {{ old('is_online') == '0' ? 'selected' : '' }}>Offline</option>
+                                <option value="1" {{ old('is_online') == '1' ? 'selected' : '' }}>Online</option>
                             </select>
                         </div>
 
                         <!-- Image -->
                         <div class="mb-4">
                             <label for="image" class="form-label">Upload Image</label>
-                            <input type="file" name="image" id="image" class="form-control">
+                            <input type="file" name="image" id="image" class="form-control" accept="image/*">
                             @error('image')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

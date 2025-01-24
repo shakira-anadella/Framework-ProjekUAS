@@ -16,9 +16,13 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->usertype != 'admin'){
-            return redirect('dashboard');
+        // Pastikan pengguna terautentikasi dan memiliki usertype 'admin'
+        if (auth()->check() && auth()->user()->usertype === 'admin') {
+            return $next($request);
         }
-        return $next($request);
+
+        // Jika bukan admin, arahkan ke dashboard atau tampilkan error
+        return redirect('dashboard')->with('error', 'Anda tidak memiliki akses sebagai admin.');
     }
+
 }

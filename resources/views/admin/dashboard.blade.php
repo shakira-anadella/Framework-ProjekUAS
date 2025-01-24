@@ -29,35 +29,94 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-700">
-                    <h3 class="mb-4 text-center text-indigo">List Event</h3>
+            <!-- Dashboard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Pie Chart Section -->
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h4 class="text-lg font-semibold text-center text-indigo-600 mb-4">Event Categories Distribution</h4>
+                    <div class="flex justify-center">
+                        <canvas id="pieChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
 
-                    <!-- Table Content -->
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr style="background-color:#6f42c1; color: white;">
-                                    <th>No</th>
-                                    <th>Event Name</th>
-                                    <th>description</th>
-                                    <th class="text-center">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($events as $event)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $event->title }}</td>
-                                        <td>{{ $event->description }}</td>
-                                        <td class="text-center">{{ $event->event_date }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                <!-- Review Chart Section -->
+                <div class="mt-8 bg-white shadow rounded-lg p-6">
+                    <h4 class="text-lg font-semibold text-center text-indigo-600 mb-4">Review Distribution per Event</h4>
+                    <div class="flex justify-center">
+                        <canvas id="reviewChart" width="400" height="400"></canvas>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+
+            <!-- Event Table Section -->
+            <div class="mt-8 bg-white shadow rounded-lg p-6">
+                <h3 class="text-xl font-semibold text-center text-indigo-600 mb-4">Event List</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr style="background-color:#6f42c1; color: white;">
+                                <th>No</th>
+                                <th>Event Name</th>
+                                <th>Description</th>
+                                <th class="text-center">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($events as $event)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $event->title }}</td>
+                                    <td>{{ $event->description }}</td>
+                                    <td class="text-center">{{ $event->event_date }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Pie Chart - Event Categories Distribution
+            fetch('{{ route("admin.chart.data") }}')
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('pieChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'pie',  // Pie chart type
+                        data: data,   // Data from the server
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                            },
+                        },
+                    });
+                })
+                .catch(error => console.error('Error fetching pie chart data:', error));
+
+            // Bar Chart - Review Distribution per Event
+            fetch('{{ route("admin.reviews.chartData") }}')
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('reviewChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',  // Bar chart type
+                        data: data,   // Data for review chart
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching bar chart data:', error));
+        });
+    </script>
 </x-app-layout>
