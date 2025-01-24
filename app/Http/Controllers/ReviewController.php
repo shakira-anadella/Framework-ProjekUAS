@@ -28,31 +28,21 @@ class ReviewController extends Controller
     /**
      * Menambahkan review baru untuk event (user hanya bisa menambah review)
      */
-    public function store(Request $request, Event $event)
+    public function store(Request $request, $eventId)
     {
-        // Validasi input review
-        $request->validate([
-            'review' => 'required|string|max:255',
+        $validated = $request->validate([
+            'review' => 'required|string|max:500',
             'rating' => 'required|integer|min:1|max:5',
         ]);
 
-        // Cek apakah user sudah memberi review untuk event ini
-        $existingReview = $event->reviews()->where('user_id', auth()->id())->first();
-        if ($existingReview) {
-            return redirect()->route('events.show', $event->id)
-                ->with('error', 'Anda sudah memberikan review untuk event ini.');
-        }
-
-        // Menambahkan review ke event
-        $event->reviews()->create([
+        Review::create([
             'user_id' => auth()->id(),
-            'review' => $request->review,
-            'rating' => $request->rating,
+            'event_id' => $eventId,
+            'review' => $validated['review'],
+            'rating' => $validated['rating'],
         ]);
 
-        // Redirect kembali ke halaman event setelah review ditambahkan
-        return redirect()->route('events.show', $event->id)
-            ->with('success', 'Review berhasil ditambahkan.');
+        return redirect()->route('events.show', $eventId)->with('success', 'Review berhasil ditambahkan!');
     }
 
     // ADMIN SECTION
@@ -75,16 +65,13 @@ class ReviewController extends Controller
      * Menampilkan detail event beserta review yang ada.
      */
     public function show(Event $event)
-{
-    // Memuat reviews dengan relasi user
-    $reviews = $event->reviews()->with('user')->latest()->get();
+    {
+        // Ambil semua review untuk event tertentu dengan pagination
+        $reviews = $event->reviews()->with('user')->latest()->paginate(5);
+
+        // Kirim data event dan review ke view
+        return view('events.show', compact('event', 'reviews'));
+    }
+
     
-    // Cek apakah ada review yang ditemukan
-    dd($reviews); // Cek data review
-
-    // Kirim ke view
-    return view('events.show', compact('event', 'reviews'));
-}
-
-
 }

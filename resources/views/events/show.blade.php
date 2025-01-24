@@ -44,8 +44,20 @@
                     <div class="mt-8">
                         <h3 class="text-3xl font-semibold text-green-600">Review Event</h3>
 
-                        <!-- Daftar Review (horizontal scrollable) -->
-                        <div class="mt-6 overflow-x-auto flex space-x-4 pb-4">
+                        <!-- Daftar Review -->
+                        <div class="mt-6 flex space-x-6 overflow-x-auto pb-4">
+                            @foreach($reviews as $review)
+                                <div class="flex-none w-72 border p-4 bg-gray-100 rounded-lg shadow-md">
+                                    <p><strong>{{ $review->user->name }}</strong></p>
+                                    <p>{{ $review->review }}</p>
+                                    <p><strong>Rating:</strong> {{ $review->rating }}/5</p>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="mt-4">
+                            {{ $reviews->links() }} <!-- Menampilkan pagination -->
                         </div>
 
                         <!-- Form untuk menambahkan review -->

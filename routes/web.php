@@ -35,10 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/', [ProfileController::class, 'update'])->name('update');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
     });
-
-    // Public Review Routes (for logged-in users)
-    Route::post('/events/{event}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-    Route::post('/events/{reviews}', [ReviewController::class, 'show'])->name('reviews.show');
+    
 });
 
 // Admin Routes
@@ -85,6 +82,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Registration Routes
     Route::prefix('registrations')->name('registrations.')->group(function () {
         Route::get('/', [RegistrationController::class, 'index'])->name('index');
+        Route::delete('/{id}', [RegistrationController::class, 'destroy'])->name('destroy');
+
     });
 });
 
@@ -92,11 +91,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 Route::get('/events', [EventController::class, 'publicIndex'])->name('events.index');
 Route::get('/events/{event}', [EventController::class, 'publicShow'])->name('events.show');
 
+
+Route::post('events/{event}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::post('/reviews/{event}', [ReviewController::class, 'store'])->name('reviews.store');
+
 // Rute untuk menampilkan halaman form pendaftaran event
 Route::get('/events/{event}/register', [RegistrationController::class, 'create'])->name('registrations.create');
 
 // Rute untuk menyimpan pendaftaran
-Route::post('/events/{event}/register', [RegistrationController::class, 'store'])->name('registrations.store');
+Route::post('/registrations/{event}', [RegistrationController::class, 'store'])->name('registrations.store');
 
 
 // Include Auth Routes

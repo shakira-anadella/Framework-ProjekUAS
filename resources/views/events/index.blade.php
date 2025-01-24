@@ -9,7 +9,7 @@
                         <div class="row align-items-center">
                             <!-- Gambar Event -->
                             <div class="col-md-3">
-                                <img src="{{ asset('storage/' . $event->image) }}" class="img-fluid rounded" alt="{{ $event->title }}">
+                            <img src="{{ asset('storage/' . $event->image) }}" class="img-fluid rounded" alt="{{ $event->title }}">
                             </div>
 
                             <!-- Detail Event -->

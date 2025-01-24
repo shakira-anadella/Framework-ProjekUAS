@@ -120,8 +120,11 @@ class EventController extends Controller
 
     public function publicShow(Event $event)
     {
-        return view('events.show', compact('event')); // View detail event
+        $reviews = $event->reviews()->paginate(5); // Misalnya, 5 review per halaman
+        return view('events.show', compact('event', 'reviews')); // Kirimkan data review ke view
     }
+
+    
 
     
 }
