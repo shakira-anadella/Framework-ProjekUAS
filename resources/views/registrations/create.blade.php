@@ -58,6 +58,7 @@
                                 <form action="{{ route('registrations.store', $event->id) }}" method="POST">
                                     @csrf
                                     <h5 class="card-title text-center mb-4">Ready to Join?</h5>
+                                    <a href="{{ route('events.index') }}" class="btn btn-primary btn-sm">Kembali ke Menu</a>
                                     <button type="submit" class="btn btn-success btn-sm">Register for this Event</button>
                                 </form>
                             </div>
