@@ -25,9 +25,9 @@ Route::get('/', function () {
 
 // Routes requiring authentication and email verification
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/events/index', function () {
+        return view('events.index');
+    })->name('events.index');
 
     // Profile Routes
     Route::prefix('profile')->name('profile.')->group(function () {

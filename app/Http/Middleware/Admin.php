@@ -22,7 +22,7 @@ class Admin
         }
 
         // Jika bukan admin, arahkan ke dashboard atau tampilkan error
-        return redirect('dashboard')->with('error', 'Anda tidak memiliki akses sebagai admin.');
+        return redirect('events.index')->with('error', 'Anda tidak memiliki akses sebagai admin.');
     }
 
 }
