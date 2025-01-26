@@ -26,6 +26,7 @@
             </div>
         </div>
     </nav>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -33,6 +34,12 @@
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h3 class="text-xl font-semibold">Daftar Reviews</h3>
                     </div>
+
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
                     @if($reviews->count() > 0)
                         <table class="table-auto w-full border-collapse border border-gray-300">

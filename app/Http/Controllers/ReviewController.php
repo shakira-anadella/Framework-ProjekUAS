@@ -50,12 +50,9 @@ class ReviewController extends Controller
      * Menghapus review (hanya untuk admin)
      */
     
-    public function destroy(Review $review)
+     public function destroy(Review $review)
     {
-        // Periksa apakah user yang mengakses adalah admin atau pemilik review
-        $this->authorize('delete', $review); // Pastikan hanya admin atau pemilik review yang bisa menghapus
-
-        // Hapus review
+        // Hapus review langsung tanpa otorisasi
         $review->delete();
 
         // Redirect setelah review dihapus
