@@ -64,3 +64,93 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# EventBloom
+
+## Deskripsi Proyek
+EventBloom adalah aplikasi berbasis web untuk mengelola dan menemukan acara menarik. Aplikasi ini dirancang dengan menggunakan **Laravel**, salah satu framework PHP paling populer, untuk membangun aplikasi berbasis web yang scalable, modern, dan mudah dikembangkan.
+
+## Fitur Utama
+- **Autentikasi Pengguna**: Login, registrasi, dan manajemen pengguna.
+- **Manajemen Acara**: CRUD (Create, Read, Update, Delete) untuk berbagai acara.
+- **Visualisasi Data**: Chart untuk menampilkan kategori acara dan rating ulasan.
+- **Antarmuka Responsif**: Dibangun dengan Bootstrap 5 untuk desain yang modern dan responsif.
+- **Pengelolaan API**: Mendukung integrasi API untuk berbagai layanan eksternal.
+
+## Persyaratan Sistem
+- **PHP**: Versi 8.1 atau lebih baru.
+- **Composer**: Untuk mengelola dependensi PHP.
+- **Node.js**: Untuk pengelolaan dependensi front-end.
+- **Database**: MySQL, PostgreSQL, atau database lain yang didukung Laravel.
+
+## Cara Instalasi
+1. Clone repository ini:
+   ```bash
+   git clone <repository-url>
+   cd Framework-ProjekUAS-main
+   ```
+
+2. Instal dependensi PHP menggunakan Composer:
+   ```bash
+   composer install
+   ```
+
+3. Instal dependensi front-end menggunakan Node.js:
+   ```bash
+   npm install
+   ```
+
+4. Salin file `.env` contoh:
+   ```bash
+   cp .env.example .env
+   ```
+
+5. Atur konfigurasi di file `.env`, termasuk koneksi database.
+
+6. Generate key aplikasi:
+   ```bash
+   php artisan key:generate
+   ```
+
+7. Jalankan migrasi database:
+   ```bash
+   php artisan migrate
+   ```
+
+8. Jalankan server lokal:
+   ```bash
+   php artisan serve
+   ```
+
+   Aplikasi akan tersedia di [http://localhost:8000](http://localhost:8000).
+
+## Struktur Proyek
+- `app/` - Logika aplikasi dan model.
+- `routes/` - Definisi rute aplikasi.
+- `resources/` - View dan asset front-end.
+- `public/` - File yang dapat diakses publik (misalnya, gambar, CSS, JS).
+- `config/` - File konfigurasi aplikasi.
+- `database/` - Migrasi dan seeder database.
+
+## Cara Penggunaan
+1. Buka aplikasi di browser setelah menjalankan server lokal.
+2. Registrasi akun jika diperlukan.
+3. Gunakan fitur-fitur yang tersedia sesuai kebutuhan.
+4. Lihat visualisasi data berupa chart kategori acara dan rating ulasan untuk memahami statistik acara.
+
+## Teknologi yang Digunakan
+- **Laravel**: Framework backend.
+- **Bootstrap 5**: Untuk styling front-end.
+- **MySQL/PostgreSQL**: Database management.
+- **Vite**: Pengelolaan asset front-end.
+- **Chart.js**: Untuk membuat visualisasi data berupa kategori acara dan rating ulasan.
+
+## Kontributor
+- Najwa Aulia Safinatun Najah (2230511094) [ohyuna56na](https://github.com/ohyuna56na)
+- Salma Nurfauziah (2230511100) [slmaaanf](https://github.com/slmaaanf)
+- Shakira Anadella (2230511105) [shakira-anadella](https://github.com/shakira-anadella)
+- Hawarizmi Ummul Adzkia (2230511109) [hawadz](https://github.com/hawadz)
+
+
+
+
