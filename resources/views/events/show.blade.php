@@ -4,6 +4,12 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     <!-- Informasi Event dengan 2 Kolom, Sejajar dengan Judul -->
                     <div class="mb-6">
                         <div class="flex items-center justify-between mb-4">
